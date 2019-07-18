@@ -14,7 +14,7 @@ setup(
     long_description=README,
     install_requires=[
         'guillotina>=4,<5',
-        'prometheus_client'
+        'prometheus_client==0.7.1'
     ],
     author='Nathan Van Gheem',
     author_email='vangheem@gmail.com',
