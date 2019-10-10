@@ -19,8 +19,8 @@ class Handler:
 
         pool = request.app.root["db"].storage.pool
 
-        metrics.pg_conn_total.set(len(pool._holders))
-        metrics.pg_conn_avail.set(pool._queue.qsize())
+        metrics.g_pg_conn_total.set(len(pool._holders))
+        metrics.g_pg_conn_avail.set(pool._queue.qsize())
 
         resp = await self.handler(request)
 

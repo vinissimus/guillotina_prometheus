@@ -7,12 +7,12 @@ request_summary = Histogram(
     buckets=[0.0005, 0.06, 0.08, 0.1, 0.12, 0.15, 0.2, 0.25, 0.3, 0.4, 0.6, 0.8, 1, 2, float("inf")],
 )
 
-pg_conn_avail = Gauge(
-    'pg_conn_avail',
+g_pg_conn_avail = Gauge(
+    'g_pg_conn_avail',
     'Time spent processing request',
 )
 
-pg_conn_total = Gauge(
-    'ph_conn_total',
+g_pg_conn_total = Gauge(
+    'g_pg_conn_total',
     'Time spent processing request',
 )
