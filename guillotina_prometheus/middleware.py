@@ -1,6 +1,5 @@
 from guillotina.utils import get_dotted_name
 from guillotina_prometheus import metrics
-from guillotina.transaction import get_tm()
 
 
 class Handler:
@@ -18,9 +17,12 @@ class Handler:
         except AttributeError:
             view_name = 'unknown'
 
-        resp = await self.handler(request)
+        pool = request.app.root["db"].storage.pool
 
-        metrics.pg_conn_total.set()
+        metrics.pg_conn_total.set(len(pool._holders))
+        metrics.pg_conn_avail.set(pool._queue.qsize())
+
+        resp = await self.handler(request)
 
         metric = metrics.request_summary.labels(
             method=request.method,
