@@ -1,5 +1,6 @@
 from guillotina.utils import get_dotted_name
 from guillotina_prometheus import metrics
+from guillotina.transaction import get_tm()
 
 
 class Handler:
@@ -18,6 +19,8 @@ class Handler:
             view_name = 'unknown'
 
         resp = await self.handler(request)
+
+        metrics.pg_conn_total.set()
 
         metric = metrics.request_summary.labels(
             method=request.method,
