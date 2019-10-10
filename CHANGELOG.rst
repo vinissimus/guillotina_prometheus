@@ -1,7 +1,21 @@
-1.0.9 (unreleased)
+5.0.2 (unreleased)
 ------------------
 
 - Nothing changed yet.
+
+
+5.0.1 (2019-07-01)
+------------------
+
+- Fixing egg missing VERSION file
+  [bloodbare]
+
+
+5.0.0 (2019-07-01)
+------------------
+
+- Update to G5
+  [bloodbare]
 
 
 1.0.8 (2019-06-18)
