@@ -1,5 +1,8 @@
 from guillotina.utils import get_dotted_name
 from guillotina_prometheus import metrics
+from guillotina.interfaces import IApplication
+from guillotina.interfaces import IDatabase
+from guillotina.component import get_utility
 
 
 class Handler:
@@ -7,6 +10,7 @@ class Handler:
     def __init__(self, app, handler):
         self.app = app
         self.handler = handler
+        self.root = get_utility(IApplication, name="root")
 
     async def __call__(self, request):
         try:
@@ -17,10 +21,11 @@ class Handler:
         except AttributeError:
             view_name = 'unknown'
 
-        pool = request.app.root["db"].storage.pool
-
-        metrics.g_pg_conn_total.set(len(pool._holders))
-        metrics.g_pg_conn_avail.set(pool._queue.qsize())
+        for _, db in self.root:
+            if IDatabase.providedBy(db):
+                pool = db.storage.pool
+                metrics.g_pg_conn_total.labels(db=db.id).set(len(pool._holders))
+                metrics.g_pg_conn_avail.labels(db=db.id).set(pool._queue.qsize())
 
         resp = await self.handler(request)
 

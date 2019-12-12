@@ -10,9 +10,11 @@ request_summary = Histogram(
 g_pg_conn_avail = Gauge(
     'g_pg_conn_avail',
     'Time spent processing request',
+    ['db']
 )
 
 g_pg_conn_total = Gauge(
     'g_pg_conn_total',
     'Time spent processing request',
+    ['db']
 )
